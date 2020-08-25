@@ -5,6 +5,16 @@ const nav2 = document.getElementById('nav-2');
 const nav3 = document.getElementById('nav-3');
 const nav4 = document.getElementById('nav-4');
 const nav5 = document.getElementById('nav-5');
+const navItems = [nav1,nav2,nav3,nav4,nav5];
+
+// Control navigation animation
+
+function navAnimation(direction1, direction2){
+    navItems.forEach((nav, index)=>{
+       nav.classList.replace(`slide-${direction1}-${index+1}`, `slide-${direction2}-${index+1}`);
+    })
+}
+
 
 function toggleNav(){
     // Toggle: Menu Bars Open/Closed
@@ -12,8 +22,9 @@ function toggleNav(){
 
     // Toggle: Menu Active
     overlay.classList.toggle('overlay-active');
-    // Animate overlay in if its is active animate overlay out if it isnt
-    overlay.classList.contains('overlay-active') ? (overlay.classList.remove('overlay-slide-left') , overlay.classList.add('overlay-slide-right')) : (overlay.classList.remove('overlay-slide-right') , overlay.classList.add('overlay-slide-left'));
+    // Animate overlay and nav items in if it is active, and vice versa
+    overlay.classList.contains('overlay-active') ? (overlay.classList.replace('overlay-slide-left', 'overlay-slide-right') , navAnimation('out', 'in')): (overlay.classList.replace('overlay-slide-right', 'overlay-slide-left'), navAnimation('in', 'out') );
+
 
 
 }
@@ -22,9 +33,6 @@ function toggleNav(){
 // Event Listeners
 
 menuBars.addEventListener('click', toggleNav);
-nav1.addEventListener('click', toggleNav);
-nav2.addEventListener('click', toggleNav);
-nav3.addEventListener('click', toggleNav);
-nav4.addEventListener('click', toggleNav);
-nav5.addEventListener('click', toggleNav);
-
+navItems.forEach((nav) =>{
+    nav.addEventListener('click', toggleNav);
+})
